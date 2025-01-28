@@ -10,7 +10,7 @@ class TestCat(unittest.TestCase):
 
     def test_no_flag(self):
         calc()
-        self.assertEqual(os.path.getsize("res"), 0, "Diff size should be 0")
+        self.assertEqual(os.path.getsize("rez"), 0, "Diff size should be 0")
 
     def test_flag_b(self):
         calc("-b")
