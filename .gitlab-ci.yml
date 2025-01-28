@@ -24,7 +24,7 @@ style-test:
     - cd src
     - ./test_style.sh
 
-integratins-tests:
+integratin-tests:
   stage: test
   tags:
     - test
@@ -33,21 +33,11 @@ integratins-tests:
     - echo "Проверка тестов в папке cat:"
     - echo "..."
     - cd src/cat
-    - if make test; then
-      echo "Тесты для cat прошли успешно!"
-      else
-        echo "Тесты для cat завершились с ошибкой!"
-        exit 1;
-      fi
+    - make test || { echo "Ошибка! Тесты для cat не прошли!"; exit 1; }
     - echo "========================"
     - echo "Проверка тестов в папке grep:"
     - echo "..."
     - cd ../grep
-    - if make test; then
-      echo "Тесты для grep прошли успешно!"
-      else 
-        echo "Тесты для grep завершились с ошибкой!"
-        exit 1;
-      fi
+    - make test || { echo "Ошибка! Тесты для grep не прошли!"; exit 1; }
   when: on_success
 
