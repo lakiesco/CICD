@@ -11,8 +11,7 @@ int main(int argc, char **argv) {
     print_file("-", flags, &index);
   } else {
     for (int i = flags_end_index + 1; i < argc; i++) {
-      if (strcmp(argv[i], "--") == 0)
-        continue;
+      if (strcmp(argv[i], "--") == 0) continue;
 
       print_file(argv[i], flags, &index);
     }
@@ -31,34 +30,34 @@ void parse_flags(int argc, char **argv, char *flags, int *index) {
   while ((current_flag =
               getopt_long(argc, argv, "bevEnstT", long_flags, NULL)) != -1) {
     switch (current_flag) {
-    case 'b':
-      append_flag(flags, 'b');
-      break;
-    case 'e':
-      append_flag(flags, 'E');
-      append_flag(flags, 'v');
-      break;
-    case 'v':
-      append_flag(flags, 'v');
-      break;
-    case 'E':
-      append_flag(flags, 'E');
-      break;
-    case 'n':
-      append_flag(flags, 'n');
-      break;
-    case 's':
-      append_flag(flags, 's');
-      break;
-    case 't':
-      append_flag(flags, 'T');
-      append_flag(flags, 'v');
-      break;
-    case 'T':
-      append_flag(flags, 'T');
-      break;
-    default:
-      exit(EXIT_FAILURE);
+      case 'b':
+        append_flag(flags, 'b');
+        break;
+      case 'e':
+        append_flag(flags, 'E');
+        append_flag(flags, 'v');
+        break;
+      case 'v':
+        append_flag(flags, 'v');
+        break;
+      case 'E':
+        append_flag(flags, 'E');
+        break;
+      case 'n':
+        append_flag(flags, 'n');
+        break;
+      case 's':
+        append_flag(flags, 's');
+        break;
+      case 't':
+        append_flag(flags, 'T');
+        append_flag(flags, 'v');
+        break;
+      case 'T':
+        append_flag(flags, 'T');
+        break;
+      default:
+        exit(EXIT_FAILURE);
     }
     *index = optind - 1;
   }
@@ -88,8 +87,7 @@ void print_file(char *name, char *flags, int *index) {
       print_symb(c, &prev, flags, index, &eline_printed);
       c = fgetc(file);
     }
-    if (file != stdin)
-      fclose(file);
+    if (file != stdin) fclose(file);
   } else {
     fprintf(stderr, "cat: %s: No such file or directory\n", name);
     exit(EXIT_FAILURE);
