@@ -12,7 +12,7 @@ s21_cat: $(SOURCE1)
 	$(CC) $(CFLAGS) $(SOURCE1) -o $(EXE1)
 
 test: s21_cat
-	python3 taest_cat.py
+	python3 test__cat.py
 
 clean:
 	rm -f *.o $(EXE1)
