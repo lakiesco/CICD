@@ -5,7 +5,7 @@ int main(int argc, char **argv) {
   int flags_end_index = 0;
   int index = 0;
 
-    parse_flags(argc, argv, flags, &flags_end_index);
+  parse_flags(argc, argv, flags, &flags_end_index);
 
   if (flags_end_index == argc - 1 || argc == 1) {
     print_file("-", flags, &index);
