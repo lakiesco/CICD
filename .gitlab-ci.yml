@@ -13,3 +13,11 @@ build_simple_bash_utils:
       - src/cat/s21_cat
       - src/grep/s21_grep
     expire_in: 30 days
+
+style-test:
+  stage: style
+  tags:
+    - style
+  script:
+    - cd src
+    - ./test_style.sh
