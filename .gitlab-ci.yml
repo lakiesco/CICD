@@ -52,7 +52,7 @@ integratins-tests:
   when: on_success
   artifacts:
     paths:
-      -src/cat/log_tests_cat.txt
-      -src/grep/log_tests_grep.txt
+      - src/cat/log_tests_cat.txt
+      - src/grep/log_tests_grep.txt
     expire_in: 30 days
 
