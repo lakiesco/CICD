@@ -15,7 +15,7 @@ cd cat || exit 1
 # Вывод результата теста записываеться в переменную OUTPUT.
 # если вывод не пустой то ошибка печатаеться.
 OUTPUT=$(clang-format -n *.c 2>&1)
-if [ -n "OUTPUT" ]; then
+if [ -n "$OUTPUT" ]; then
   echo "Ошибка кодстайла в папке cat!"
   echo "$OUTPUT"
   EXIT_CODE=1
@@ -30,7 +30,7 @@ echo "Проверка кодстайла в папке grep:"
 echo "..."
 cd grep || exit 1
 OUTPUT=$(clang-format -n *.c 2>&1)
-if [ -n "OUTPUT" ]; then
+if [ -n "$OUTPUT" ]; then
   echo "Ошибка кодстайла в папке grep!"
   echo "$OUTPUT"
   EXIT_CODE=1
