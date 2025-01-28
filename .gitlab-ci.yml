@@ -1,5 +1,6 @@
 stages:
   - build
+  - style
 
 build_simple_bash_utils:
   stage: build
