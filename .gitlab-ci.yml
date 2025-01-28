@@ -1,6 +1,7 @@
 stages:
   - build
   - style
+  - test
 
 build_simple_bash_utils:
   stage: build
@@ -22,3 +23,36 @@ style-test:
   script:
     - cd src
     - ./test_style.sh
+
+integratins-tests:
+  stage: test
+  tags:
+    - test
+  script:
+    - echo "========================"
+    - echo "Проверка тестов в папке cat:"
+    - echo "..."
+    - cd src/cat
+    - if make test; then
+      echo "Тесты для cat прошли успешно!"
+      else
+        echo "Тесты для cat завершились с ошибкой!"
+        exit 1;
+      fi
+    - echo "========================"
+    - echo "Проверка тестов в папке grep:"
+    - echo "..."
+    - cd ../grep
+    - if make test; then
+      echo "Тесты для grep прошли успешно!"
+      else 
+        echo "Тесты для grep завершились с ошибкой!"
+        exit 1;
+      fi
+  when: on_success
+  artifacts:
+    paths:
+      -src/cat/log_tests_cat.txt
+      -src/grep/log_tests_grep.txt
+    expire_in: 30 days
+
