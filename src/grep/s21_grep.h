@@ -9,8 +9,8 @@
 #include <string.h> /* for strcmp */
 
 #define BUFFSIZE 8192
-#define ERRMESSAGE                                                        \
-  "usage: s21_grep [-eivclnhsfo] [-e pattern] [-f file] [pattern] [file " \
+#define ERRMESSAGE                                                             \
+  "usage: s21_grep [-eivclnhsfo] [-e pattern] [-f file] [pattern] [file "      \
   "...]\n"
 
 struct Options {
@@ -20,10 +20,10 @@ struct Options {
 } opt;
 
 void init_options();
-void parse_option(int argc, char** argv, char* pattern);
-void open_file(int argc, char** argv, char* pattern);
-void e_process(int* e_count, char* pattern);
-void f_process(int* e_count, char* pattern);
-void output(char** argv, char* pattern, FILE* steam);
+void parse_option(int argc, char **argv, char *pattern);
+void open_file(int argc, char **argv, char *pattern);
+void e_process(int *e_count, char *pattern);
+void f_process(int *e_count, char *pattern);
+void output(char **argv, char *pattern, FILE *steam);
 
-#endif  // SRC_GREP_S21_GREP_H_
+#endif // SRC_GREP_S21_GREP_H_

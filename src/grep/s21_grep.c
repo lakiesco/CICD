@@ -1,7 +1,7 @@
 #include "s21_grep.h"
 
 /* --- Функция, main --- */
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   char pattern[BUFFSIZE] = {0};
 
   init_options();
@@ -32,7 +32,7 @@ void init_options() {
 }
 
 /* --- Функция для (-e) флага --- */
-void e_process(int* e_count, char* pattern) {
+void e_process(int *e_count, char *pattern) {
   if (*e_count) {
     strcat(pattern, "|");
   }
@@ -45,17 +45,19 @@ void e_process(int* e_count, char* pattern) {
 }
 
 /* --- Функция для (-f) флага --- */
-void f_process(int* e_count, char* pattern) {
-  FILE* fp = NULL;
+void f_process(int *e_count, char *pattern) {
+  FILE *fp = NULL;
   char line[BUFFSIZE] = {0};
 
   if ((fp = fopen(optarg, "r"))) {
     fseek(fp, 0, SEEK_SET);
 
     while (fgets(line, BUFFSIZE, fp) != NULL) {
-      if (line[strlen(line) - 1] == '\n') line[strlen(line) - 1] = 0;
+      if (line[strlen(line) - 1] == '\n')
+        line[strlen(line) - 1] = 0;
 
-      if (*e_count > 0) strcat(pattern, "|");
+      if (*e_count > 0)
+        strcat(pattern, "|");
 
       if (*line == '\0') {
         opt.empty_line = 1;
@@ -73,68 +75,71 @@ void f_process(int* e_count, char* pattern) {
 }
 
 /* --- Функция парсинга опций (флагов) --- */
-void parse_option(int argc, char** argv, char* pattern) {
+void parse_option(int argc, char **argv, char *pattern) {
   int option, e_count = 0;
-  const char* optstring = "e:f:ivclnhso";
+  const char *optstring = "e:f:ivclnhso";
 
   while (true) {
     option = getopt_long(argc, argv, optstring, NULL, NULL);
 
-    if (option == -1) break;
+    if (option == -1)
+      break;
 
     switch (option) {
-      case 'e':
-        opt.e = true;
-        e_process(&e_count, pattern);
-        break;
-      case 'i':
-        opt.i = true;
-        break;
-      case 'v':
-        opt.v = true;
-        break;
-      case 'c':
-        opt.c = true;
-        break;
-      case 'l':
-        opt.l = true;
-        break;
-      case 'n':
-        opt.n = true;
-        break;
-      case 'h':
-        opt.h = true;
-        break;
-      case 's':
-        opt.s = true;
-        break;
-      case 'f':
-        opt.f = true;
-        f_process(&e_count, pattern);
-        break;
-      case 'o':
-        opt.o = true;
-        break;
-      default:
-        exit(1);
+    case 'e':
+      opt.e = true;
+      e_process(&e_count, pattern);
+      break;
+    case 'i':
+      opt.i = true;
+      break;
+    case 'v':
+      opt.v = true;
+      break;
+    case 'c':
+      opt.c = true;
+      break;
+    case 'l':
+      opt.l = true;
+      break;
+    case 'n':
+      opt.n = true;
+      break;
+    case 'h':
+      opt.h = true;
+      break;
+    case 's':
+      opt.s = true;
+      break;
+    case 'f':
+      opt.f = true;
+      f_process(&e_count, pattern);
+      break;
+    case 'o':
+      opt.o = true;
+      break;
+    default:
+      exit(1);
     }
   }
 
-  if (opt.empty_line) opt.o = 0;
+  if (opt.empty_line)
+    opt.o = 0;
 
   if (!opt.e && !opt.f) {
-    if (!*argv[optind]) argv[optind] = ".";
+    if (!*argv[optind])
+      argv[optind] = ".";
     strcat(pattern, argv[optind]);
     optind += 1;
   }
 }
 
 /* --- Функция открытия файлов --- */
-void open_file(int argc, char** argv, char* pattern) {
+void open_file(int argc, char **argv, char *pattern) {
   opt.files_count = argc - optind;
 
   for (; optind < argc; optind++) {
-    FILE* steam;
+    FILE *steam;
 
     if ((steam = fopen(argv[optind], "r")) != NULL) {
       output(argv, pattern, steam);
@@ -146,18 +151,19 @@ void open_file(int argc, char** argv, char* pattern) {
   }
 }
 
-void output(char** argv, char* pattern, FILE* steam) {
-  regex_t regex;  // структура для регулярного выражения
-  int success = 0;  // результат работы regex (default=0)
+void output(char **argv, char *pattern, FILE *steam) {
+  regex_t regex; // структура для регулярного выражения
+  int success = 0; // результат работы regex (default=0)
   int regflag = REG_EXTENDED;
-  char str[BUFFSIZE] = {0};  // временная строка (tmp)
+  char str[BUFFSIZE] = {0}; // временная строка (tmp)
   size_t line_number = 1;
 
   int lines_count = 0;
   regmatch_t pmatch[1] = {0};
   size_t nmatch = 1;
 
-  if (opt.i) regflag |= REG_ICASE;
+  if (opt.i)
+    regflag |= REG_ICASE;
 
   // готовит бинарник регулярного выражения
   regcomp(&regex, pattern, regflag);
@@ -168,7 +174,8 @@ void output(char** argv, char* pattern, FILE* steam) {
 
       success = regexec(&regex, str, nmatch, pmatch, 0);
 
-      if (opt.v) success = success ? 0 : 1;
+      if (opt.v)
+        success = success ? 0 : 1;
 
       if (success != REG_NOMATCH) {
         if (!opt.c && !opt.l) {
@@ -180,9 +187,10 @@ void output(char** argv, char* pattern, FILE* steam) {
           }
           if (opt.o && !opt.v) {
             new_line_o_counter = 0;
-            char* ptr = str;
+            char *ptr = str;
             while (!success) {
-              if (pmatch[0].rm_eo == pmatch[0].rm_so) break;
+              if (pmatch[0].rm_eo == pmatch[0].rm_so)
+                break;
               printf("%.*s\n", (int)(pmatch[0].rm_eo - pmatch[0].rm_so),
                      ptr + pmatch[0].rm_so);
               ptr += pmatch[0].rm_eo;
@@ -190,7 +198,8 @@ void output(char** argv, char* pattern, FILE* steam) {
             }
           }
 
-          if (!opt.o) printf("%s", str);
+          if (!opt.o)
+            printf("%s", str);
           if (str[strlen(str) - 1] != '\n' && new_line_o_counter) {
             printf("\n");
           }
