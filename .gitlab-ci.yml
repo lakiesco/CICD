@@ -12,7 +12,11 @@ build_simple_bash_utils:
     - cd src/cat && make s21_cat
     - cd ../grep && make s21_grep
   after_script:
-    - sh src/tg.sh
+    - if [ "$CI_JOB_STATUS" = "success" ]; then
+        sh src/tg.sh "DO6 CI/CD: Стадия Build успешно завершена!"
+      else
+        sh src/tg.sh "DO6 CI/CD: Ошибка на стадии Build!"
+      fi
   artifacts:
     paths:
       - src/cat/s21_cat
@@ -27,7 +31,11 @@ style-test:
     - cd src
     - ./test_style.sh
   after_script:
-    - sh src/tg.sh
+    - if [ "$CI_JOB_STATUS" = "success" ]; then
+        sh src/tg.sh "DO6 CI/CD: Стадия Style успешно завершена!"
+      else
+        sh src/tg.sh "DO6 CI/CD: Ошибка на стадии Style!"
+      fi
 
 integratin-tests:
   stage: test
@@ -45,7 +53,11 @@ integratin-tests:
     - cd ../grep
     - make test || { echo "Ошибка! Тесты для grep не прошли!"; exit 1; }
   after_script:
-    - sh src/tg.sh
+    - if [ "$CI_JOB_STATUS" = "success" ]; then
+        sh src/tg.sh "DO6 CI/CD: Стадия Test успешно завершена!"
+      else
+        sh src/tg.sh "DO6 CI/CD: Ошибка на стадии Test!"
+      fi
   when: on_success
 
 deploy:
@@ -56,7 +68,11 @@ deploy:
     - cd src
     - ./deploy.sh
   after_script:
-    - sh src/tg.sh
+    - if [ "$CI_JOB_STATUS" = "success" ]; then
+        sh src/tg.sh "DO6 CI/CD: Стадия Deploy успешно завершена!"
+      else
+        sh src/tg.sh "DO6 CI/CD: Ошибка на стадии Deploy!"
+      fi
   when: manual
   dependencies:
     - build_simple_bash_utils
