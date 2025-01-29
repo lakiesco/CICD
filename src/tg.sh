@@ -11,7 +11,7 @@ if [[ -z "$TELEGRAM_BOT_TOKEN" || -z "$TELEGRAM_CHAT_ID" ]]; then
 fi
 
 # Определение статуса
-if [[ "$CI_JOB_STATUS" == "success" ]]; then
+if [[ "$CI_JOB_STATUS" == "success" && $? -eq 0 ]]; then
   STATUS="✅ Успешно"
 else
   STATUS="❌ Ошибка"
