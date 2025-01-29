@@ -49,7 +49,7 @@ deploy:
   script:
     - cd src
     - ./deploy.sh
-  only:
+  when:
     - manual
   dependencies:
     - build_simple_bash_utils
