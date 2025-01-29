@@ -2,6 +2,7 @@ stages:
   - build
   - style
   - test
+  - deploy
 
 build_simple_bash_utils:
   stage: build
@@ -41,3 +42,15 @@ integratin-tests:
     - make test || { echo "Ошибка! Тесты для grep не прошли!"; exit 1; }
   when: on_success
 
+deploy:
+  stage: deploy
+  tags:
+    - deploy
+  script:
+    - cd src
+    - ./deploy.sh
+  only:
+    - manual
+  dependencies:
+    - build_simple_bash_utils
+  allow_failure: false 
