@@ -1,11 +1,30 @@
 #!/bin/bash
 
-# НИКОГДА НЕ ХРАНИТЬ ТАК ДАННЫЕ!!!!
-# TELEGRAM_BOT_TOKEN="7456794509:AAGWuVhA_1odOJYw4sXwH6IkPj8GzX2r8rY"
-# TELEGRAM_CHAT_ID="419527685"
+TELEGRAM_BOT_TOKEN="7456794509:AAGWuVhA_1odOJYw4sXwH6IkPj8GzX2r8rY"
+TELEGRAM_CHAT_ID="419527685"
 
-URL="https://api.telegram.org/bot7456794509:AAGWuVhA_1odOJYw4sXwH6IkPj8GzX2r8rY/sendMessage"
+# Проверка наличия переменных
+if [[ -z "$TELEGRAM_BOT_TOKEN" || -z "$TELEGRAM_CHAT_ID" ]]; then
+  echo "Ошибка: TELEGRAM_BOT_TOKEN или TELEGRAM_CHAT_ID не заданы!"
+  exit 1
+fi
 
-TEXT="CI/CD STATUS: $1%0A%0AProject: $CI_PROJECT_NAME%0A%0AURL: $CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID/%0A%0AStatus: $CI_JOB_STATUS"
+# Определение статуса
+STATUS="✅ Успешно"
+if [[ "$CI_JOB_STATUS" != "success" ]]; then
+  STATUS="❌ Ошибка"
+fi
 
-curl -s -d "chat_id=419527685&web_page_preview=1&text=$TEXT" $URL > /dev/null
+# Формирование сообщения
+MESSAGE="🔔 *CI/CD Notification*  
+📌 Проект: *${CI_PROJECT_NAME}*  
+🔄 Ветка: *${CI_COMMIT_REF_NAME}*  
+🔧 Джоб: *${CI_JOB_NAME}*  
+💡 Статус: *${STATUS}*"
+
+# Отправка уведомления в Telegram
+curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+  -d chat_id="${TELEGRAM_CHAT_ID}" \
+  -d text="${MESSAGE}" \
+  -d parse_mode="Markdown"
+
