@@ -3,7 +3,7 @@
 # Параметры удалённого сервера
 REMOTE_USER="lakiesco"                # Пользователь на второй ВМ
 REMOTE_HOST="192.168.1.11"       # IP-адрес второй ВМ
-REMOTE_DIR="/usr/local/bin"       # Директория для развёртывания
+REMOTE_DIR="/usr/local/bin"       # Директория для развёртывания.
 
 # Путь к файлам, которые нужно передать (артефакты)
 ARTIFACTS=("src/cat/s21_cat" "src/grep/s21_grep")
