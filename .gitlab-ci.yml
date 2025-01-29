@@ -49,8 +49,7 @@ deploy:
   script:
     - cd src
     - ./deploy.sh
-  when:
-    - manual
+  when: manual
   dependencies:
     - build_simple_bash_utils
   allow_failure: false 
