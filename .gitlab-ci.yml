@@ -12,7 +12,7 @@ build_simple_bash_utils:
     - cd src/cat && make s21_cat
     - cd ../grep && make s21_grep
   after_script:
-    - sh src/tg.sh || exit 1
+    - sh src/tg.sh
   artifacts:
     paths:
       - src/cat/s21_cat
@@ -25,7 +25,7 @@ style-test:
     - style
   script:
     - cd src
-    - ./test_style.sh || exit 1
+    - ./test_style.sh
   after_script:
     - sh src/tg.sh
 
@@ -45,7 +45,7 @@ integratin-tests:
     - cd ../grep
     - make test || { echo "Ошибка! Тесты для grep не прошли!"; exit 1; }
   after_script:
-    - sh src/tg.sh || exit 1
+    - sh src/tg.sh
   when: on_success
 
 deploy:
@@ -56,7 +56,7 @@ deploy:
     - cd src
     - ./deploy.sh
   after_script:
-    - sh src/tg.sh || exit 1
+    - sh src/tg.sh
   when: manual
   dependencies:
     - build_simple_bash_utils
