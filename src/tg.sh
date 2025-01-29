@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# НИКОГДА НЕ ХРАНИТЬ ТАК ДАННЫЕ!!!
+# НИКОГДА НЕ ХРАНИТЬ ТАК ДАННЫЕ!!!!
 TELEGRAM_BOT_TOKEN=7456794509:AAGWuVhA_1odOJYw4sXwH6IkPj8GzX2r8rY
 TELEGRAM_CHAT_ID=419527685
 
