@@ -6,7 +6,7 @@ REMOTE_HOST="192.168.1.11"       # IP-адрес второй ВМ
 REMOTE_DIR="/usr/local/bin"       # Директория для развёртывания.
 
 # Путь к файлам, которые нужно передать (артефакты)
-ARTIFACTS=("src/cat/s21_cat" "src/grep/s21_grep")
+ARTIFACTS=("cat/s21_cat" "grep/s21_grep")
 
 # Файл для логирования
 LOG_FILE="deploy.log"
